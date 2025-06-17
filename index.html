@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario de Clima Laboral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            color: white;
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+        
+        .access-methods {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .method-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+        
+        .method-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .method-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .method-desc {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .token-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .token-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        
+        .token-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .validate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .validate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .direct-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .direct-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.3);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .info-section {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+        }
+        
+        .info-title {
+            font-weight: 700;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        
+        .info-item {
+            color: #34495e;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .info-item::before {
+            content: '•';
+            color: #3498db;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .device-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 25px;
+                margin: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+                font-size: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📋</div>
+        <h1>Cuestionario de Clima</h1>
+        <p class="subtitle">Acceso universal sin restricciones</p>
+        
+        <div class="access-methods">
+            <!-- Método 1: Validación para PC -->
+            <div class="method-card" id="pc-method">
+                <div class="method-icon">💻</div>
+                <div class="method-title">Acceso con Código</div>
+                <div class="method-desc">Para computadoras de escritorio con validación</div>
+                
+                <div class="token-section">
+                    <input type="text" 
+                           id="tokenInput" 
+                           class="token-input" 
+                           placeholder="INGRESE SU CÓDIGO"
+                           maxlength="20">
+                    <button class="validate-btn" onclick="validateToken()">
+                        Validar y Acceder
+                    </button>
+                    <div id="errorMessage" class="error-message"></div>
+                    <div id="successMessage" class="success-message"></div>
+                </div>
+            </div>
+            
+            <!-- Método 2: Acceso directo para móviles -->
+            <div class="method-card" id="mobile-method">
+                <div class="method-icon">📱</div>
+                <div class="method-title">Acceso Directo</div>
+                <div class="method-desc">Para dispositivos móviles - sin restricciones</div>
+                
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScSgSaNzKVg9HqxjyoocpS4mrabfqfMAUI11zI_MMnYSi7_BA/viewform?usp=sf_link" 
+                   class="direct-btn" 
+                   target="_blank">
+                    Ir al Cuestionario
+                </a>
+                
+                <div class="device-badge" id="deviceBadge">
+                    Dispositivo detectado
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="info-title">💡 Información del Sistema</div>
+            <div class="info-item">Esta página no depende de script.google.com</div>
+            <div class="info-item">Compatible con todos los navegadores móviles</div>
+            <div class="info-item">Bypassa restricciones de seguridad</div>
+            <div class="info-item">Funciona en modo incógnito/privado</div>
+            <div class="info-item">Acceso desde redes sociales (WhatsApp, Facebook, etc.)</div>
+        </div>
+    </div>
+    
+    <script>
+        // Detectar dispositivo
+        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        var isInAppBrowser = /FBAN|FBAV|Instagram|Twitter|Line|WeChat|Snapchat|TikTok/i.test(navigator.userAgent);
+        
+        // Configurar interfaz según el dispositivo
+        if (isMobile || isInAppBrowser) {
+            document.getElementById('pc-method').style.display = 'none';
+            document.getElementById('deviceBadge').textContent = 'Móvil detectado - Acceso directo';
+            if (isInAppBrowser) {
+                document.getElementById('deviceBadge').textContent = 'Navegador de app detectado';
+            }
+        } else {
+            document.getElementById('mobile-method').style.display = 'none';
+            document.getElementById('deviceBadge').textContent = 'PC detectado - Requiere código';
+        }
+        
+        // Lista de tokens válidos (reemplaza con tus tokens reales)
+        var validTokens = [
+            'ABC123', 'XYZ789', 'TEST001', 'DEMO999', 'CLIMA01',
+            'ACCESS1', 'TOKEN01', 'VALID1', 'CODE123', 'SURVEY1'
+        ];
+        
+        // Función para validar token
+        function validateToken() {
+            var token = document.getElementById('tokenInput').value.trim().toUpperCase();
+            var errorDiv = document.getElementById('errorMessage');
+            var successDiv = document.getElementById('successMessage');
+            
+            // Limpiar mensajes
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            if (!token) {
+                showError('Por favor, ingrese un código válido.');
+                return;
+            }
+            
+            // Simular validación local (reemplaza con tu lógica)
+            if (validTokens.includes(token)) {
+                showSuccess('Código válido. Redirigiendo...');
+                
+                setTimeout(function() {
+                    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScSgSaNzKVg9HqxjyoocpS4mrabfqfMAUI11zI_MMnYSi7_BA/viewform?usp=sf_link';
+                }, 1500);
+                
+                // Opcional: Marcar token como usado
+                markTokenAsUsed(token);
+                
+            } else {
+                // Intentar validar con tu Google Apps Script como fallback
+                validateWithGoogleScript(token);
+            }
+        }
+        
+        // Función para validar con Google Apps Script (fallback)
+        function validateWithGoogleScript(token) {
+            var scriptUrl = 'https://script.google.com/macros/s/AKfycbwlZTx2cPO3GfLZZvuxEmHgXdTm_1TejIvyAH620bhKF4DlAO5KKJihvP2YkBbg43_y/exec';
+            
+            fetch(scriptUrl + '?token=' + encodeURIComponent(token))
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error('Error de red');
+                })
+                .then(html => {
+                    // Si la respuesta contiene redirección, es válido
+                    if (html.includes('forms.gle') || html.includes('docs.google.com/forms')) {
+                        showSuccess('Código válido. Redirigiendo...');
+                        setTimeout(function() {
+                            window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScSgSaNzKVg9HqxjyoocpS4mrabfqfMAUI11zI_MMnYSi7_BA/viewform?usp=sf_link';
+                        }, 1500);
+                    } else {
+                        showError('Código inválido o ya utilizado.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showError('El código ingresado no es válido.');
+                });
+        }
+        
+        // Funciones de utilidad
+        function showError(message) {
+            var errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = '⚠️ ' + message;
+            errorDiv.style.display = 'block';
+        }
+        
+        function showSuccess(message) {
+            var successDiv = document.getElementById('successMessage');
+            successDiv.textContent = '✅ ' + message;
+            successDiv.style.display = 'block';
+        }
+        
+        function markTokenAsUsed(token) {
+            // Marcar token como usado en localStorage (solo para esta sesión)
+            var usedTokens = JSON.parse(localStorage.getItem('usedTokens') || '[]');
+            if (!usedTokens.includes(token)) {
+                usedTokens.push(token);
+                localStorage.setItem('usedTokens', JSON.stringify(usedTokens));
+            }
+        }
+        
+        // Formatear input
+        document.getElementById('tokenInput').addEventListener('input', function(e) {
+            e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            
+            // Limpiar errores al escribir
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        });
+        
+        // Permitir envío con Enter
+        document.getElementById('tokenInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                validateToken();
+            }
+        });
+        
+        // Log de información
+        console.log('Página cargada exitosamente');
+        console.log('Dispositivo:', isMobile ? 'Móvil' : 'Escritorio');
+        console.log('Navegador de app:', isInAppBrowser);
+        console.log('User Agent:', navigator.userAgent);
+    </script>
+</body>
+</html>
